@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Cart</title>
+</head>
+<body>
+your cart
+<div th:if="${message != null}">
+    <span th:text="${message}"></span>
+</div>
+<div th:if="${cart.orderLines != null and not isEmpty}">
+    <br/>
+    <div th:each="line : ${cart.orderLines}">
+        <span th:text="${line.product.name}"></span>
+        <br/>
+        <span th:text="${line.count}"></span>
+        <br/>
+        <br/>
+    </div>
+    <form th:action="@{/cart/buy}" method="post">
+        <input type="submit" value="buy">
+    </form>
+</div>
+
+</body>
+</html>

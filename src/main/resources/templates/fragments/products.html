@@ -1,0 +1,24 @@
+<div th:fragment="products" class="products" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div>
+        <a th:href="@{/(sort=0)}">newest</a>
+        <a th:href="@{/(sort=1)}">from A to Z</a>
+        <a th:href="@{/(sort=2)}">from Z to A</a>
+        <a th:href="@{/(sort=3)}">ascending price</a>
+        <a th:href="@{/(sort=4)}">descending price</a>
+    </div>
+    <div class="product" th:each="product: ${productsPage.content}">
+        <a th:href="@{/product/{id}(id = ${product.id})}">
+            <div th:if="product.img_name != null">
+                <img th:src="@{/img/{name}(name = ${product.img_name})}" alt="">
+            </div>
+            <span th:text="${product.name}"></span>
+            <br/>
+            <span th:text="${product.company}"></span>
+            <br/>
+            <span th:text="${product.price}"></span>
+        </a>
+    </div>
+    <div th:if="${productsPage.totalPages > 0}" th:each="pageNumber : ${pageNumbers}">
+        <a th:href="@{/(size=${productsPage.size}, page=${pageNumber})}" th:text="${pageNumber}"></a>
+    </div>
+</div>

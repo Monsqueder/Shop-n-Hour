@@ -1,0 +1,31 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+
+<header th:fragment="header" class="header">
+    <ul>
+        <li>
+            <a href="#">
+                <img src="/img/bars.png" alt="menu"/>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <label>
+                    <input type="search" placeholder="search">
+                </label>
+                <img src="/img/search.png" alt="search"/>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <img src="/img/cart.png" alt="cart"/>
+            </a>
+        </li>
+        <li>
+            <span th:if="${consumer != null}" th:text="${consumer.firstName}"></span>
+        </li>
+    </ul>
+</header>
+
+</html>

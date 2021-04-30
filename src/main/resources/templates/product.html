@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Product</title>
+</head>
+<body>
+<div th:object="${product}">
+    <div th:text="*{name}"></div>
+    <div th:text="*{company}"></div>
+    <div th:text="*{price} + ' zl'"></div>
+    <div th:text="*{description}"></div>
+</div>
+<form th:action="@{/addToCart/{id}(id=${product.id})}" method="post">
+    <input type="number" name="count">
+    <input type="submit" value="Add to cart">
+</form>
+<br>
+<form th:action="@{/addComment/{id}(id=${product.id})}" method="post" th:object="${comment}">
+    <input type="text" name="text">
+    <input type="submit" value="Add Comment">
+</form>
+<br>
+<div th:if="${comments == null}">
+    <span th:text="No comments"></span>
+</div>
+<div th:each="comment : ${comments}">
+    <div th:object="${comment.author}">
+        <span th:text="${comment?.author?.firstName}"></span>
+        <span th:text="' '"></span>
+        <span th:text="${comment?.author?.lastName}"></span>
+    </div>
+    <span th:text="${comment.text}"></span>
+</div>
+</body>
+</html>
