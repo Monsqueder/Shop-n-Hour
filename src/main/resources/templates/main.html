@@ -2,18 +2,14 @@
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;500;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${title} ?: 'The Shop'"></title>
     <link rel="stylesheet" href="/styles/common.css">
 </head>
 <body>
-    <div class="wrapper">
+    <div class="container">
         <div th:replace="fragments/header.html :: header"></div>
-        <div class="content">
-            <div th:replace="fragments/products.html :: products"></div>
-        </div>
-        <div class="footer">footer</div>
+        <div th:replace="fragments/products.html :: products"></div>
     </div>
 </body>
 </html>

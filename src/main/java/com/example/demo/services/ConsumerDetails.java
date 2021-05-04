@@ -2,19 +2,17 @@ package com.example.demo.services;
 
 import com.example.demo.models.Consumer;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.Collections;
 
-public class UserDetailsImpl implements UserDetails {
+public class ConsumerDetails implements UserDetails {
 
     private Consumer consumer;
 
 
 
-    public UserDetailsImpl(Consumer consumer) {
+    public ConsumerDetails(Consumer consumer) {
         this.consumer = consumer;
     }
 

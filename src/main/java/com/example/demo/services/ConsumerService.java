@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+
 import java.util.HashSet;
 import java.util.UUID;
 
@@ -32,7 +33,7 @@ public class ConsumerService implements UserDetailsService {
         Consumer consumer = consumerRepository.findByEmail(email);
 
         if(consumer != null) {
-            return new UserDetailsImpl(consumer);
+            return new ConsumerDetails(consumer);
         } else throw new UsernameNotFoundException("User not found");
     }
 

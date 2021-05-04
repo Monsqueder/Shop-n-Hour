@@ -1,24 +1,28 @@
-<div th:fragment="products" class="products" xmlns:th="http://www.w3.org/1999/xhtml">
+<div th:fragment="products" xmlns:th="http://www.w3.org/1999/xhtml">
     <div>
-        <a th:href="@{/(sort=0)}">newest</a>
-        <a th:href="@{/(sort=1)}">from A to Z</a>
-        <a th:href="@{/(sort=2)}">from Z to A</a>
-        <a th:href="@{/(sort=3)}">ascending price</a>
-        <a th:href="@{/(sort=4)}">descending price</a>
+        <ul>
+            <li><a th:href="@{/(sort=0)}">newest</a></li>
+            <li><a th:href="@{/(sort=1)}">from A to Z</a></li>
+            <li><a th:href="@{/(sort=2)}">from Z to A</a></li>
+            <li><a th:href="@{/(sort=3)}">ascending price</a></li>
+            <li><a th:href="@{/(sort=4)}">descending price</a></li>
+        </ul>
     </div>
-    <div class="product" th:each="product: ${productsPage.content}">
-        <a th:href="@{/product/{id}(id = ${product.id})}">
-            <div th:if="product.img_name != null">
+    <div>
+        <div th:each="product: ${productsPage.content}">
+            <a th:href="@{/product/{id}(id = ${product.id})}">
                 <img th:src="@{/img/{name}(name = ${product.img_name})}" alt="">
-            </div>
-            <span th:text="${product.name}"></span>
-            <br/>
-            <span th:text="${product.company}"></span>
-            <br/>
-            <span th:text="${product.price}"></span>
-        </a>
+                <h5 th:text="${product.company}"></h5>
+                <span th:text="${product.name}"></span>
+                <span th:text="${product.price}"></span>
+            </a>
+        </div>
     </div>
-    <div th:if="${productsPage.totalPages > 0}" th:each="pageNumber : ${pageNumbers}">
-        <a th:href="@{/(size=${productsPage.size}, page=${pageNumber})}" th:text="${pageNumber}"></a>
-    </div>
+    <nav th:if="${productsPage.totalPages > 0}">
+        <ul>
+            <li th:each="pageNumber : ${pageNumbers}">
+                <a th:href="@{/(size=${productsPage.size}, page=${pageNumber})}" th:text="${pageNumber}"></a>
+            </li>
+        </ul>
+    </nav>
 </div>

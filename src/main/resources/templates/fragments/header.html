@@ -2,30 +2,29 @@
       xmlns:th="http://www.thymeleaf.org">
 
 
-<header th:fragment="header" class="header">
-    <ul>
-        <li>
-            <a href="#">
-                <img src="/img/bars.png" alt="menu"/>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <label>
-                    <input type="search" placeholder="search">
-                </label>
-                <img src="/img/search.png" alt="search"/>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <img src="/img/cart.png" alt="cart"/>
-            </a>
-        </li>
-        <li>
-            <span th:if="${consumer != null}" th:text="${consumer.firstName}"></span>
-        </li>
-    </ul>
+<header th:fragment="header">
+    <div class="nav">
+        <ul class="main-nav">
+            <li class="logo">
+                <a th:href="@{/}">The Shop</a>
+            </li>
+            <li class="nav-link">
+                <a class="nav-sub-link" th:href="@{/}">Home</a>
+            </li>
+            <li class="nav-link nav-list">
+                <a class="nav-sub-link" th:href="@{/}">For Men</a>
+            </li>
+            <li class="nav-link nav-list">
+                <a class="nav-sub-link" th:href="@{/}">For Women</a>
+            </li>
+            <li class="nav-link">
+                <a class="nav-sub-link" th:href="@{/}">Hottest</a>
+            </li>
+            <li class="nav-link nav-list">
+                <a th:href="@{/}">Welcome, Guess</a>
+            </li>
+        </ul>
+    </div>
 </header>
 
 </html>

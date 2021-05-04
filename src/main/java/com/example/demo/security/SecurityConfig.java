@@ -11,7 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityService extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private ConsumerService userDetailsService;
@@ -31,7 +31,7 @@ public class SecurityService extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/", "/signup", "/styles/**", "/js/**", "/img/**", "/activate/**").permitAll()
-                .antMatchers("/addProduct").hasAuthority("ADMIN")
+                .antMatchers("/addProduct").hasAnyAuthority("ADMIN", "MODERATOR")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
