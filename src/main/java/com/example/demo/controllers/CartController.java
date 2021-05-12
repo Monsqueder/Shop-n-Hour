@@ -14,8 +14,15 @@ public class CartController {
     @Autowired
     private CartService cartService;
 
+    @Autowired
+    private ControllerUtils controllerUtils;
+
     @GetMapping("/cart")
     public String getCart(Model model) {
+
+        //header
+        controllerUtils.showHeader(model, null);
+
         Cart cart = cartService.getCurrentCart();
         model.addAttribute("cart", cart);
         if (cart == null) {
@@ -28,7 +35,7 @@ public class CartController {
     }
 
     @PostMapping("/cart/buy")
-    public String buy(Model model){
+    public String buy(){
         if (cartService.buy()){
             return "redirect:/";
         } else {

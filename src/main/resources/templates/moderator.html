@@ -1,17 +1,23 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8">
-    <title>ADD PRODUCT</title>
-</head>
+<th:block th:insert="fragments/head.html :: head(title = 'Moderator - The Shop')"></th:block>
 <body>
-<form action="#" th:action="@{/addProduct}" th:object="${product}" method="post" enctype="multipart/form-data">
-    Name: <input type="text" th:field="*{name}" />
-    Company: <input type="text" th:field="*{company}" />
-    Price: <input type="number" th:field="*{price}" />
-    Description: <input type="text" th:field="*{description}" />
-    Image: <input type="file" name="file">
-    <input type="submit" value="submit" />
-</form>
+    <div th:replace="fragments/header.html :: header(firstName = ${consumer?.firstName}, ideas = ${ideas}, tag = '', isAdmin = ${isAdmin}, isModerator = ${isModerator})"></div>
+    <div class="content">
+        <div class="form-label">
+            <h5>Add Product</h5>
+        </div>
+        <div class="form">
+            <form th:action="@{/addProduct}" th:object="${product}" method="post" enctype="multipart/form-data">
+                <input type="text" th:field="*{name}" placeholder="Name">
+                <input type="text" th:field="*{company}" placeholder="Company">
+                <input type="number" th:field="*{price}" placeholder="Price">
+                <input type="text" th:field="*{description}" placeholder="Description">
+                <input type="file" name="file" placeholder="Image">
+                <input type="submit" value="submit">
+            </form>
+        </div>
+    </div>
+    <div th:replace="fragments/footer.html :: footer"></div>
 </body>
 </html>

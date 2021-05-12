@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<th:block th:insert="fragments/head.html :: head(title = 'Sign In - The Shop')"></th:block>
 <body>
-sign in
-
-<span th:text="${message}"></span>
-
-<form action="#" th:action="@{/signin}" method="post">
-    email: <input type="text" name="email">
-    password: <input type="password" name="password">
-    <input type="submit" value="submit">
-</form>
+    <div>
+        <div>
+            <h3>SIGN IN</h3>
+        </div>
+        <div>
+            <span th:text="${message}"></span>
+        </div>
+        <div>
+            <form th:action="@{/signin}" method="post">
+                <input type="text" name="email" placeholder="Email">
+                <input type="password" name="password" placeholder="Password">
+                <input type="submit" value="submit">
+            </form>
+        </div>
+    </div>
 </body>
 </html>

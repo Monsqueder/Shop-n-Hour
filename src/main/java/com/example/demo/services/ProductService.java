@@ -61,6 +61,10 @@ public class ProductService {
         return productRepository.findAll(this.getPageRequest(currentPage, pageSize, sortType));
     }
 
+    public Page<Product> getProductPage(int currentPage, int pageSize, int sortType, String tag) {
+        return productRepository.findByTag(tag, this.getPageRequest(currentPage, pageSize, sortType));
+    }
+
     private PageRequest getPageRequest(int currentPage, int pageSize, int sortType) {
         switch (sortType) {
             case 1:

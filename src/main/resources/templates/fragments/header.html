@@ -1,30 +1,76 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
-
-
-<header th:fragment="header">
+<header th:fragment="header (firstName, ideas, tag, isAdmin, isModerator)" xmlns:th="http://www.thymeleaf.org">
     <div class="nav">
-        <ul class="main-nav">
-            <li class="logo">
-                <a th:href="@{/}">The Shop</a>
-            </li>
-            <li class="nav-link">
-                <a class="nav-sub-link" th:href="@{/}">Home</a>
-            </li>
-            <li class="nav-link nav-list">
-                <a class="nav-sub-link" th:href="@{/}">For Men</a>
-            </li>
-            <li class="nav-link nav-list">
-                <a class="nav-sub-link" th:href="@{/}">For Women</a>
-            </li>
-            <li class="nav-link">
-                <a class="nav-sub-link" th:href="@{/}">Hottest</a>
-            </li>
-            <li class="nav-link nav-list">
-                <a th:href="@{/}">Welcome, Guess</a>
-            </li>
-        </ul>
+        <div class="main-nav">
+            <div class="container">
+                <div class="logo">
+                    <a th:href="@{/}">Shop & Hour</a>
+                </div>
+                <ul class="nav-list">
+                    <li>
+                        <a th:href="@{/}">Home</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/}">Ladies</a>
+                        <ul class="nav-sub-list">
+                            <li><a href="">Category 1</a></li>
+                            <li><a href="">Category 2</a></li>
+                            <li><a href="">Category 3</a></li>
+                            <li><a href="">Category 4</a></li>
+                            <li><a href="">Category 5</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a th:href="@{/}">Gentlemen</a>
+                        <ul class="nav-sub-list">
+                            <li><a href="">Category 1</a></li>
+                            <li><a href="">Category 2</a></li>
+                            <li><a href="">Category 3</a></li>
+                            <li><a href="">Category 4</a></li>
+                            <li><a href="">Category 5</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a th:href="@{/}">Hottest</a>
+                    </li>
+                </ul>
+                <div class="greetings" th:if="${firstName != null}">
+                    <div>
+                        <a th:href="@{/profile}" th:text="'Welcome, ' + ${firstName}"></a>
+                        <ul class="nav-sub-list left">
+                            <li><a th:href="@{/profile}">Profile</a></li>
+                            <li th:if="${isModerator}"><a th:href="@{/moderator}">Moderator</a></li>
+                            <li th:if="${isAdmin}"><a th:href="@{/admin}">Administrator</a></li>
+                            <li><a th:href="@{/logout}">Log out</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="greetings" th:if="${firstName == null}">
+                    <div>
+                        <a th:href="@{/signin}">Sign in</a>
+                    </div>
+                    <div>
+                        <a th:href="@{/signup}">Sign up</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="search-nav">
+            <div class="container">
+            <div class="ideas">
+                <a th:href="@{/search(tag = ${idea})}" th:each="idea : ${ideas}" th:text="${idea}"></a>
+            </div>
+            <div class="search-form">
+                <form th:action="@{/search}" method="get">
+                    <input type="text" name="tag">
+                    <div>
+                        <input type="submit" value="">
+                    </div>
+                </form>
+            </div>
+            <div class="cart">
+                <a th:href="@{/cart}"></a>
+            </div>
+        </div>
+        </div>
     </div>
 </header>
-
-</html>

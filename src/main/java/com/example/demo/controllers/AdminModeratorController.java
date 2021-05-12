@@ -12,19 +12,26 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
-public class ModeratorController {
+public class AdminModeratorController {
 
     @Autowired
     private ModeratorService moderatorService;
 
+    @Autowired
+    private ControllerUtils controllerUtils;
+
     @GetMapping("/moderator")
     public String getProductPage(Model model) {
+
+        //header
+        controllerUtils.showHeader(model, null);
+
         model.addAttribute("product", new Product());
         return "moderator";
     }
 
     @PostMapping("/moderator/addProduct")
-    public String addProduct( Model model, @ModelAttribute Product product, @RequestParam("file") MultipartFile file){
+    public String addProduct(Model model, @ModelAttribute Product product, @RequestParam("file") MultipartFile file){
         if (moderatorService.addProduct(product, file)) {
             model.addAttribute("message", "Added successfully!");
         } else {

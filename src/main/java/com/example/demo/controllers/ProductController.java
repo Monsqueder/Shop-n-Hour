@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
 
 
 @Controller
@@ -20,14 +21,19 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private ControllerUtils controllerUtils;
+
     @GetMapping("/product/{id}")
     public String getProductPage(Model model, @PathVariable Long id) {
+
+        //header
+        controllerUtils.showHeader(model, null);
+
         if (!productRepository.existsById(id)) {
             return "redirect:/";
         }
-
         Product product = productRepository.getOne(id);
-
         model.addAttribute("product", product);
         model.addAttribute("comments", product.getComments());
         return "product";
@@ -50,6 +56,20 @@ public class ProductController {
             model.addAttribute("message", "Failed!");
         }
         return "redirect:/product/{id}";
+    }
+
+    @GetMapping("/search")
+    public String search(Model model,
+                         @RequestParam(required = false) String tag,
+                         @RequestParam("page") Optional<Integer> page,
+                         @RequestParam("size") Optional<Integer> size,
+                         @RequestParam("sort") Optional<Integer> sort) {
+
+        //header
+        controllerUtils.showHeader(model, tag);
+        controllerUtils.showProductPage(model, page, size, sort, tag);
+
+        return "search";
     }
 
 }

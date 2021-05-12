@@ -1,11 +1,11 @@
-<div th:fragment="products" xmlns:th="http://www.w3.org/1999/xhtml">
+<div th:fragment="products (tag)" xmlns:th="http://www.w3.org/1999/xhtml">
     <div>
         <ul>
-            <li><a th:href="@{/(sort=0)}">newest</a></li>
-            <li><a th:href="@{/(sort=1)}">from A to Z</a></li>
-            <li><a th:href="@{/(sort=2)}">from Z to A</a></li>
-            <li><a th:href="@{/(sort=3)}">ascending price</a></li>
-            <li><a th:href="@{/(sort=4)}">descending price</a></li>
+            <li><a th:href="@{/search(tag = ${tag}, size=${productsPage.size}, page=${pageNumber}, sort=0)}">newest</a></li>
+            <li><a th:href="@{/search(tag = ${tag}, size=${productsPage.size}, page=${pageNumber}, sort=1)}">from A to Z</a></li>
+            <li><a th:href="@{/search(tag = ${tag}, size=${productsPage.size}, page=${pageNumber}, sort=2)}">from Z to A</a></li>
+            <li><a th:href="@{/search(tag = ${tag}, size=${productsPage.size}, page=${pageNumber}, sort=3)}">ascending price</a></li>
+            <li><a th:href="@{/search(tag = ${tag}, size=${productsPage.size}, page=${pageNumber}, sort=4)}">descending price</a></li>
         </ul>
     </div>
     <div>
@@ -21,7 +21,7 @@
     <nav th:if="${productsPage.totalPages > 0}">
         <ul>
             <li th:each="pageNumber : ${pageNumbers}">
-                <a th:href="@{/(size=${productsPage.size}, page=${pageNumber})}" th:text="${pageNumber}"></a>
+                <a th:href="@{/search(size=${productsPage.size}, page=${pageNumber})}" th:text="${pageNumber}"></a>
             </li>
         </ul>
     </nav>

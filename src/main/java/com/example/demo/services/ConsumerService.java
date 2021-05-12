@@ -85,4 +85,20 @@ public class ConsumerService implements UserDetailsService {
         }
         return consumerRepository.findByEmail(authentication.getName());
     }
+
+    public boolean isAdmin() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null) {
+            return false;
+        }
+        return authentication.getAuthorities().contains(Role.ADMIN);
+    }
+
+    public boolean isModerator() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null) {
+            return false;
+        }
+        return authentication.getAuthorities().contains(Role.MODERATOR);
+    }
 }

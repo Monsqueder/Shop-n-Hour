@@ -1,27 +1,27 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8">
-    <title>Cart</title>
-</head>
+<th:block th:insert="fragments/head.html :: head(title = 'Your cart - The Shop')"></th:block>
 <body>
-your cart
-<div th:if="${message != null}">
-    <span th:text="${message}"></span>
-</div>
-<div th:if="${cart.orderLines != null and not isEmpty}">
-    <br/>
-    <div th:each="line : ${cart.orderLines}">
-        <span th:text="${line.product.name}"></span>
-        <br/>
-        <span th:text="${line.count}"></span>
-        <br/>
-        <br/>
-    </div>
-    <form th:action="@{/cart/buy}" method="post">
-        <input type="submit" value="buy">
-    </form>
-</div>
-
+    <div th:replace="fragments/header.html :: header(firstName = ${consumer?.firstName}, ideas = ${ideas}, tag = '', isAdmin = ${isAdmin}, isModerator = ${isModerator})"></div>
+    <div class="content">
+            <div>
+                <div class="label">
+                    <h4>Your cart</h4>
+                </div>
+                <div th:if="${message != null}">
+                    <span th:text="${message}"></span>
+                </div>
+                <div th:if="${cart.orderLines != null and not isEmpty}">
+                    <div th:each="line : ${cart.orderLines}">
+                        <span th:text="${line.product.name}"></span>
+                        <span th:text="${line.count}"></span>
+                    </div>
+                    <form th:action="@{/cart/buy}" method="post">
+                        <input type="submit" value="buy">
+                    </form>
+                </div>
+            </div>
+        </div>
+    <div th:replace="fragments/footer.html :: footer"></div>
 </body>
 </html>

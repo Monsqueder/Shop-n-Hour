@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
-    <th:block th:replace="fragments/head.html :: head(title = 'Welcome - The Shop')"></th:block>
+<th:block th:insert="fragments/head.html :: head(title = ${consumer.firstName} + ' ' + ${consumer.lastName} + ' - The Shop')"></th:block>
 <body>
     <div th:replace="fragments/header.html :: header(firstName = ${consumer?.firstName}, ideas = ${ideas}, tag = '', isAdmin = ${isAdmin}, isModerator = ${isModerator})"></div>
-    <div class="content"></div>
+    <div class="content">
+
+    </div>
     <div th:replace="fragments/footer.html :: footer"></div>
 </body>
 </html>
