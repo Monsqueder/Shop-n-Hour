@@ -162,7 +162,7 @@ li:hover > .nav-sub-list, div:hover > .nav-sub-list {
     background-color: white;
     border: 1px solid #99998f;
     border-left: none;
-    border-radius: 0px 3px 3px 0px;
+    border-radius: 0 3px 3px 0;
 
 
 }

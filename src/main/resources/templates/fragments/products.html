@@ -11,7 +11,7 @@
     <div>
         <div th:each="product: ${productsPage.content}">
             <a th:href="@{/product/{id}(id = ${product.id})}">
-                <img th:src="@{/img/{name}(name = ${product.img_name})}" alt="">
+                <img th:src="@{/img_storage/{name}(name = ${product.img_name})}">
                 <h5 th:text="${product.company}"></h5>
                 <span th:text="${product.name}"></span>
                 <span th:text="${product.price}"></span>
