@@ -4,6 +4,7 @@ import com.example.demo.models.Consumer;
 import com.example.demo.models.Role;
 import com.example.demo.repos.ConsumerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,6 +29,9 @@ public class ConsumerService implements UserDetailsService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Value("${domain}")
+    private String domain;
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Consumer consumer = consumerRepository.findByEmail(email);
@@ -48,15 +52,12 @@ public class ConsumerService implements UserDetailsService {
 
         HashSet<Role> roles = new HashSet<>();
         roles.add(Role.USER);
-        if (consumer.getEmail().equals("lyakhovskiym@gmail.com")) {
-            roles.add(Role.ADMIN);
-        }
         consumer.setRoles(roles);
         consumerRepository.save(consumer);
 
         if (!StringUtils.isEmpty(consumer.getEmail())){
             String message = String.format(
-                    "Hello, %s! \n" + "Welcome to The Shop. Visit this link to activate your account:\n" + "http://localhost:8080/activate/%s",
+                    "Hello, %s! \n" + "Welcome to The Shop. Visit this link to activate your account:\n" + "http://" + domain + "/activate/%s",
                     consumer.getFirstName(), consumer.getActivationCode()
             );
             mailSender.send(consumer.getEmail(), "The Shop - Activation", message);

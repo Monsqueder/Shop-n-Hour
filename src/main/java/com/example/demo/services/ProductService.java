@@ -103,6 +103,9 @@ public class ProductService {
         if (fullList.size() == 0) {
             return null;
         }
+        if (fullList.size() < count) {
+            count = fullList.size();
+        }
         switch (type) {
             case 1:
                 ArrayList<Product> list1 = new ArrayList<>();
