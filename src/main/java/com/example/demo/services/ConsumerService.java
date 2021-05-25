@@ -73,6 +73,8 @@ public class ConsumerService implements UserDetailsService {
 
         consumer.setActivationCode(null);
         consumer.setIsActivated(true);
+        consumer.setPassword("1");
+        consumer.setPasswordConfirm("1");
         consumerRepository.save(consumer);
 
         return true;

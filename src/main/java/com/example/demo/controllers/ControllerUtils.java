@@ -1,6 +1,7 @@
 package com.example.demo.controllers;
 
 import com.example.demo.models.Product;
+import com.example.demo.repos.CategoryRepository;
 import com.example.demo.services.ConsumerService;
 import com.example.demo.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class ControllerUtils {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     public void showErrors(Model model, BindingResult bindingResult) {
         Map<String, String> errors = bindingResult.getFieldErrors().stream().collect(Collectors.toMap(
@@ -54,6 +58,9 @@ public class ControllerUtils {
         } else {
             model.addAttribute("tag", tag);
         }
+
+        model.addAttribute("maleCategories", categoryRepository.findAllByType("male"));
+        model.addAttribute("femaleCategories", categoryRepository.findAllByType("female"));
     }
 
     public void showProductPage(Model model, Optional<Integer> page, Optional<Integer> size, Optional<Integer> sort, String tag) {
@@ -66,7 +73,7 @@ public class ControllerUtils {
         if (tag == null) {
             productPage = productService.getProductPage(currentPage, pageSize, sortType);
         } else {
-            productPage = productService.getProductPage(currentPage, pageSize, sortType, tag);
+            productPage = productService.getProductPage(currentPage, pageSize, sortType, tag.toLowerCase());
         }
 
         int totalCount = productPage.getTotalPages();

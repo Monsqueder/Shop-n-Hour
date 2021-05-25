@@ -3,6 +3,7 @@ package com.example.demo.models;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.util.List;
 import java.util.Set;
 
@@ -52,7 +53,10 @@ public class Consumer {
 
     private String hashPassword;
 
+    @Pattern(regexp = "[0-9]{3}-[0-9]{3}-[0-9]{3}", message = "Phone number must be like 123-123-123")
     private String phoneNumber;
+
+    private String address;
 
     @OneToMany(mappedBy = "consumer",
             orphanRemoval = true,
@@ -168,5 +172,13 @@ public class Consumer {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

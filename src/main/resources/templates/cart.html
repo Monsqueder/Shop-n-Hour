@@ -2,9 +2,16 @@
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 <th:block th:insert="fragments/head.html :: head(title = 'Your cart - The Shop')"></th:block>
 <body>
-    <div th:replace="fragments/header.html :: header(firstName = ${consumer?.firstName}, ideas = ${ideas}, tag = '', isAdmin = ${isAdmin}, isModerator = ${isModerator})"></div>
+    <div th:replace="fragments/header.html :: header(
+        maleCategories = ${maleCategories},
+        femaleCategories = ${femaleCategories},
+        firstName = ${consumer?.firstName},
+        ideas = ${ideas},
+        tag = '',
+        isAdmin = ${isAdmin},
+        isModerator = ${isModerator})"></div>
     <div class="content">
-            <div>
+            <div th:if="${consumer != null}">
                 <div class="label">
                     <h4>Your cart</h4>
                 </div>
@@ -17,9 +24,13 @@
                         <span th:text="${line.count}"></span>
                     </div>
                     <form th:action="@{/cart/buy}" method="post">
+                        <input type="hidden" name="date" th:value="${#dates.format(#dates.createNow(), 'dd/MM/yyyy HH:mm')}">
                         <input type="submit" value="buy">
                     </form>
                 </div>
+            </div>
+            <div th:if="${consumer == null}">
+                <span>Please, <a th:href="@{/signup}">sign up</a> or <a th:href="@{/signin}">sing in</a> to get cart</span>
             </div>
         </div>
     <div th:replace="fragments/footer.html :: footer"></div>

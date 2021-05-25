@@ -7,6 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Date;
 
 @Controller
 public class CartController {
@@ -35,8 +38,8 @@ public class CartController {
     }
 
     @PostMapping("/cart/buy")
-    public String buy(){
-        if (cartService.buy()){
+    public String buy(Model model, @RequestParam Date date){
+        if (cartService.buy(date)){
             return "redirect:/";
         } else {
             return "redirect:/cart";

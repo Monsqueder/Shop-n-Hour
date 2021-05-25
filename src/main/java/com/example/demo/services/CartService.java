@@ -7,6 +7,8 @@ import com.example.demo.repos.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 public class CartService {
 
@@ -16,7 +18,7 @@ public class CartService {
     @Autowired
     private CartRepository cartRepository;
 
-    public boolean buy() {
+    public boolean buy(Date date) {
         Cart cart = this.getCurrentCart();
         if (cart == null) {
             return false;
@@ -29,6 +31,8 @@ public class CartService {
             sum+=line.getProduct().getPrice();
         }
         //some business-logic
+        cart.setAddress(cart.getConsumer().getAddress());
+        cart.setDate(date);
         cart.setActive(false);
         cartRepository.save(cart);
         return true;

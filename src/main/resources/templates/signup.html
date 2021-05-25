@@ -1,37 +1,42 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
-<th:block th:insert="fragments/head.html :: head(title = 'Sign Up - The Shop')"></th:block>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sign In - Shop'n'hour</title>
+    <link rel="stylesheet" href="/styles/common.css">
+    <link rel="stylesheet" href="/styles/signin_signout_styles.css">
+</head>
 <body>
-    <div>
-        <div>
-            <h3>SIGN UP</h3>
+    <div class="sign-in-up-field">
+        <div class="sign-in-up-nav">
+            <a th:href="@{/}">Home</a>
+            <a th:href="@{/signin}">Sign in</a>
+            <a th:href="@{/signup}">Sign up</a>
+        </div>
+        <div th:if="${message != null}">
+            <span th:text="${message}"></span>
         </div>
         <div>
             <form th:action="@{/signup}" method="post" th:object="${consumer}">
-                <div>
-                    <span th:if="${emailError != null}" th:text="${emailError}"></span>
-                    <input type="text" th:field="*{email}" placeholder="Email"/>
-                </div>
-                <div>
-                    <span th:if="${firstNameError != null}" th:text="${firstNameError}"></span>
-                    <input type="text" th:field="*{firstName}" placeholder="First name"/>
-                </div>
-                <div>
-                    <span th:if="${lastNameError != null}" th:text="${lastNameError}"></span>
-                    <input type="text" th:field="*{lastName}" placeholder="Last name"/>
-                </div>
-                <div>
-                    <span th:if="${passwordsError != null}" th:text="${passwordsError}"></span>
-                    <span th:if="${passwordError != null}" th:text="${passwordError}"></span>
-                    <input type="password" th:field="*{password}" placeholder="Password"/>
-                </div>
-                <div>
-                    <span th:if="${passwordConfirmError != null}" th:text="${passwordConfirmError}"></span>
-                    <input type="password" th:field="*{passwordConfirm}" placeholder="Repeat password"/>
-                </div>
-                <div>
-                    <input type="submit" value="submit">
-                </div>
+                <span th:if="${emailError != null}" th:text="${emailError}"></span>
+                <input type="text" th:field="*{email}" placeholder="Email"/>
+                <span th:if="${firstNameError != null}" th:text="${firstNameError}"></span>
+                <input type="text" th:field="*{firstName}" placeholder="First name"/>
+                <span th:if="${lastNameError != null}" th:text="${lastNameError}"></span>
+                <input type="text" th:field="*{lastName}" placeholder="Last name"/>
+
+                <!--<span th:if="${addressError != null}" th:text="${addressError}"></span>
+                <input type="text" th:field="*{address}" placeholder="Address (Not required)"/>
+                <span th:if="${addressError != null}" th:text="${addressError}"></span>
+                <input type="tel" th:field="*{address}" placeholder="Phone number (Not required)" pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}"/>-->
+
+                <span th:if="${passwordsError != null}" th:text="${passwordsError}"></span>
+                <span th:if="${passwordError != null}" th:text="${passwordError}"></span>
+                <input type="password" th:field="*{password}" placeholder="Password"/>
+                <span th:if="${passwordConfirmError != null}" th:text="${passwordConfirmError}"></span>
+                <input type="password" th:field="*{passwordConfirm}" placeholder="Repeat password"/>
+                <input type="submit" value="Sign up">
             </form>
         </div>
     </div>

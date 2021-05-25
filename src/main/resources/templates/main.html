@@ -1,9 +1,79 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
-    <th:block th:replace="fragments/head.html :: head(title = 'Welcome - The Shop')"></th:block>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${title} ?: 'The Shop'"></title>
+    <link rel="stylesheet" href="/styles/common.css">
+    <link rel="stylesheet" href="/styles/product_styles.css">
+</head>
 <body>
-    <div th:replace="fragments/header.html :: header(firstName = ${consumer?.firstName}, ideas = ${ideas}, tag = '', isAdmin = ${isAdmin}, isModerator = ${isModerator})"></div>
-    <div class="content"></div>
+    <div th:replace="fragments/header.html :: header(
+        maleCategories = ${maleCategories},
+        femaleCategories = ${femaleCategories},
+        firstName = ${consumer?.firstName},
+        ideas = ${ideas},
+        tag = '',
+        isAdmin = ${isAdmin},
+        isModerator = ${isModerator})"></div>
+    <div class="content" id="content">
+        <div class="message" th:if="${message != null}">
+            <span th:text="${message}"></span>
+        </div>
+        <div class="label">
+            <span>Hot offer</span>
+        </div>
+        <div class="container">
+            <div class="product-list" th:if="${productLine1 != null}">
+                <div class="product-card" th:each="product : ${productLine1}">
+                    <img th:src="@{/img_storage/{path}(path=${product.img_name[0]})}">
+                    <div>
+                        <span th:text="${product.category?.name}"></span>
+                        <a th:href="@{/product/{id}(id = ${product.id})}" th:text="${product.name}"></a>
+                        <div>
+                            <span th:text="${product.price} + ' zł'"></span>
+                            <span th:if="false">Hot</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="label">
+            <span>Latest arrival</span>
+        </div>
+        <div class="container">
+            <div class="product-list" th:if="${productLine2 != null}">
+                <div class="product-card" th:each="product : ${productLine2}">
+                    <img th:src="@{/img_storage/{path}(path=${product.img_name[0]})}">
+                    <div>
+                        <span th:text="${product.category?.name}"></span>
+                        <a th:href="@{/product/{id}(id = ${product.id})}" th:text="${product.name}"></a>
+                        <div>
+                            <span th:text="${product.price} + ' zł'"></span>
+                            <span th:if="false">Hot</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div th:replace="fragments/footer.html :: footer"></div>
+    <script type="text/javascript">
+        window.onscroll = function() {myFunction()};
+
+        var search = document.getElementById("search-nav");
+        var content = document.getElementById("content");
+        var sticky = search.offsetTop;
+
+        function myFunction() {
+            if (window.pageYOffset >= sticky) {
+                search.classList.add("sticky");
+                content.classList.add("padding");
+            } else {
+                search.classList.remove("sticky");
+                content.classList.remove("padding");
+            }
+        }
+    </script>
 </body>
 </html>

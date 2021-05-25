@@ -1,39 +1,113 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
-<th:block th:insert="fragments/head.html :: head(title = ${product.name} + ' - The Shop')"></th:block>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${title} ?: 'The Shop'"></title>
+    <link rel="stylesheet" href="/styles/common.css">
+    <link rel="stylesheet" href="/styles/product_styles.css">
+</head>
 <body>
 <div>
-    <div th:replace="fragments/header.html :: header(firstName = ${consumer?.firstName}, ideas = ${ideas}, tag = '', isAdmin = ${isAdmin}, isModerator = ${isModerator})"></div>
+    <div th:replace="fragments/header.html :: header(
+        maleCategories = ${maleCategories},
+        femaleCategories = ${femaleCategories},
+        firstName = ${consumer?.firstName},
+        ideas = ${ideas},
+        tag = '',
+        isAdmin = ${isAdmin},
+        isModerator = ${isModerator})"></div>
     <div class="content">
-        <div th:object="${product}">
-            <div th:text="*{name}"></div>
-            <div th:text="*{company}"></div>
-            <div th:text="*{price} + ' zl'"></div>
-            <div th:text="*{description}"></div>
-        </div>
-        <form th:action="@{/addToCart/{id}(id=${product.id})}" method="post">
-            <input type="number" name="count">
-            <input type="submit" value="Add to cart">
-        </form>
-        <br>
-        <form th:action="@{/addComment/{id}(id=${product.id})}" method="post" th:object="${comment}">
-            <input type="text" name="text">
-            <input type="submit" value="Add Comment">
-        </form>
-        <br>
-        <div th:if="${comments == null}">
-            <span th:text="'No comments'"></span>
-        </div>
-        <div th:each="comment : ${comments}">
-            <div th:object="${comment.author}">
-                <span th:text="${comment?.author?.firstName}"></span>
-                <span th:text="' '"></span>
-                <span th:text="${comment?.author?.lastName}"></span>
+        <div class="container  column">
+            <div th:object="${product}" class="product-info">
+                <div>
+                    <img th:each="image : *{img_name}" th:src="@{/img_storage/{img_name}(img_name = ${image})}" onclick="changeImage()">
+                </div>
+                <div>
+                    <img th:src="@{/img_storage/{img_name}(img_name = ${product.img_name[0]})}" id="current_image">
+                </div>
+                <div>
+                    <div>
+                        <span class="product-info-name" th:text="*{name}"></span>
+                        <span class="product-info-category" th:text="*{category.name}"></span>
+                        <span class="product-info-price" th:text="*{price} + ' zl'"></span>
+                        <span class="product-info-description" th:text="*{description}"></span>
+                    </div>
+                    <form th:action="@{/addToCart/{id}(id=${product.id})}" method="post">
+                        <span>Size:</span>
+                        <div style="margin-bottom: 15px">
+                            <div th:each="size : ${product.sizes}">
+                                <input type="radio" name="size" value="${size}"><span th:text="${size}"></span>
+                            </div>
+                        </div>
+                        <span>Color:</span>
+                        <div>
+                            <div th:each="color : ${product.colors}">
+                                <input type="radio" name="color" value="${color}"><span th:text="${color}"></span>
+                            </div>
+                        </div>
+                        <div>
+                            <input type="number" name="count" value="1">
+                            <input type="submit" value="Add to cart">
+                        </div>
+                    </form>
+                </div>
             </div>
-            <span th:text="${comment.text}"></span>
+            <div th:if="${isModerator}">
+                <button onclick="changeProduct()">Change product</button>
+                <div>
+                    <form id="change_form" th:action="@{/moderator/changeProduct}" th:object="${product}" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="id" th:value="${product.id}">
+                        <input type="text" th:field="*{name}" placeholder="Name">
+                        <input type="text" th:field="*{company}" placeholder="Company">
+                        <input type="text" th:field="*{description}" placeholder="Description">
+                        <input type="file" name="file" placeholder="Image">
+                        <input type="submit" value="submit">
+                    </form>
+                </div>
+            </div>
+            <div>
+                <form th:action="@{/addComment/{id}(id=${product.id})}" method="post" th:object="${comment}" th:if="${consumer != null}">
+                    <input type="text" name="text">
+                    <input type="submit" value="Add Comment">
+                </form>
+                <div th:if="${consumer == null}">
+                    <span>Only authorized users can add commentaries</span>
+                </div>
+                <div th:each="comment : ${comments}">
+                    <div th:object="${comment.author}">
+                        <span th:text="${comment?.author?.firstName}"></span>
+                        <span th:text="' '"></span>
+                        <span th:text="${comment?.author?.lastName}"></span>
+                    </div>
+                    <span th:text="${comment.text}"></span>
+                </div>
+            </div>
         </div>
     </div>
     <div th:replace="fragments/footer.html :: footer"></div>
+    <script type="text/javascript">
+        const current_image = document.getElementById('current_image');
+        const form = document.getElementById('change_form');
+        let isActive = false;
+        form.classList.add("hide");
+
+        function changeImage() {
+            let target = event.target;
+            let src = target.src;
+            current_image.src = src;
+        }
+
+        function changeProduct() {
+            if (isActive) {
+                form.classList.remove("hide");
+                isActive = false;
+            } else {
+                form.classList.add("hide");
+                isActive = true;
+            }
+        }
+    </script>
 </div>
 </body>
 </html>

@@ -12,15 +12,30 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    private boolean isDisabled;
+
     private String name;
 
     private String company;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     private double price;
 
     private String description;
 
-    private String img_name;
+    private double rating;
+
+    @ElementCollection
+    private List<String> sizes;
+
+    @ElementCollection
+    private List<String> colors;
+
+    @ElementCollection
+    private List<String> img_name;
 
     private int order_count;
 
@@ -36,8 +51,23 @@ public class Product {
             cascade = CascadeType.ALL)
     private List<Comment> comments;
 
+    public Product() {
+    }
+
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public boolean isDisabled() {
+        return isDisabled;
+    }
+
+    public void setDisabled(boolean disabled) {
+        isDisabled = disabled;
     }
 
     public String getName() {
@@ -56,6 +86,22 @@ public class Product {
         this.company = company;
     }
 
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     public double getPrice() {
         return price;
     }
@@ -72,12 +118,28 @@ public class Product {
         this.description = description;
     }
 
-    public String getImg_name() {
+    public List<String> getSizes() {
+        return sizes;
+    }
+
+    public void setSizes(List<String> sizes) {
+        this.sizes = sizes;
+    }
+
+    public List<String> getColors() {
+        return colors;
+    }
+
+    public void setColors(List<String> colors) {
+        this.colors = colors;
+    }
+
+    public List<String> getImg_name() {
         return img_name;
     }
 
-    public void setImg_name(String img_url) {
-        this.img_name = img_url;
+    public void setImg_name(List<String> img_name) {
+        this.img_name = img_name;
     }
 
     public int getOrder_count() {

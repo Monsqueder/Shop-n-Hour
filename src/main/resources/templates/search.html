@@ -1,8 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
-<th:block th:replace="fragments/head.html :: head(title = 'Search: ' + ${tag ?: ' '})"></th:block>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${title} ?: 'The Shop'"></title>
+    <link rel="stylesheet" href="/styles/common.css">
+    <link rel="stylesheet" href="/styles/product_styles.css">
+</head>
 <body>
-    <div th:replace="fragments/header.html :: header(firstName = ${consumer?.firstName}, ideas = ${ideas}, tag = ${tag}, isAdmin = ${isAdmin}, isModerator = ${isModerator})"></div>
+    <div th:replace="fragments/header.html :: header(
+        maleCategories = ${maleCategories},
+        femaleCategories = ${femaleCategories},
+        firstName = ${consumer?.firstName},
+        ideas = ${ideas},
+        tag = ${tag},
+        isAdmin = ${isAdmin},
+        isModerator = ${isModerator})"></div>
     <div class="content">
         <div th:replace="fragments/products.html :: products(tag = ${tag})"></div>
     </div>

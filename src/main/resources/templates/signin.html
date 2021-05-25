@@ -1,19 +1,27 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<th:block th:insert="fragments/head.html :: head(title = 'Sign In - The Shop')"></th:block>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sign In - Shop'n'hour</title>
+    <link rel="stylesheet" href="/styles/common.css">
+    <link rel="stylesheet" href="/styles/signin_signout_styles.css">
+</head>
 <body>
-    <div>
-        <div>
-            <h3>SIGN IN</h3>
+    <div class="sign-in-up-field">
+        <div class="sign-in-up-nav">
+            <a th:href="@{/}">Home</a>
+            <a th:href="@{/signin}">Sign in</a>
+            <a th:href="@{/signup}">Sign up</a>
         </div>
-        <div>
+        <div th:if="${message != null}">
             <span th:text="${message}"></span>
         </div>
         <div>
             <form th:action="@{/signin}" method="post">
                 <input type="text" name="email" placeholder="Email">
                 <input type="password" name="password" placeholder="Password">
-                <input type="submit" value="submit">
+                <input type="submit" value="Sign in">
             </form>
         </div>
     </div>

@@ -2,18 +2,42 @@
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 <th:block th:insert="fragments/head.html :: head(title = 'Moderator - The Shop')"></th:block>
 <body>
-    <div th:replace="fragments/header.html :: header(firstName = ${consumer?.firstName}, ideas = ${ideas}, tag = '', isAdmin = ${isAdmin}, isModerator = ${isModerator})"></div>
+    <div th:replace="fragments/header.html :: header(
+        maleCategories = ${maleCategories},
+        femaleCategories = ${femaleCategories},
+        firstName = ${consumer?.firstName},
+        ideas = ${ideas},
+        tag = '',
+        isAdmin = ${isAdmin},
+        isModerator = ${isModerator})"></div>
     <div class="content">
         <div class="form-label">
             <h5>Add Product</h5>
         </div>
         <div class="form">
-            <form th:action="@{/addProduct}" th:object="${product}" method="post" enctype="multipart/form-data">
+            <form th:action="@{/moderator/addProduct}" th:object="${product}" method="post" enctype="multipart/form-data">
                 <input type="text" th:field="*{name}" placeholder="Name">
                 <input type="text" th:field="*{company}" placeholder="Company">
+                <select name="categoryId" id="categoryId">
+                    <option th:each="category : ${maleCategories}" th:text="${category.name}  + ' (male)'" th:value="${category.id}"></option>
+                    <option th:each="category : ${femaleCategories}" th:text="${category.name}   + ' (female)'" th:value="${category.id}"></option>
+                </select>
                 <input type="number" th:field="*{price}" placeholder="Price">
+                <span>Sizes:</span>
+                <div th:each="size : ${sizes}">
+                    <input type="checkbox" name="selectedSizes" th:value="${size}"><span th:text="${size}"></span>
+                </div>
+                <span>Colors:</span>
+                <div th:each="color : ${colors}">
+                    <input type="checkbox" name="selectedColors" th:value="${color}"><span th:text="${color}"></span>
+                </div>
                 <input type="text" th:field="*{description}" placeholder="Description">
-                <input type="file" name="file" placeholder="Image">
+                <div>
+                    Pictures:
+                    <input type="file" name="files" placeholder="Image">
+                    <input type="file" name="files" placeholder="Image">
+                    <input type="file" name="files" placeholder="Image">
+                </div>
                 <input type="submit" value="submit">
             </form>
         </div>

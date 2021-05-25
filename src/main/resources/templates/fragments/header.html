@@ -1,5 +1,4 @@
-<header th:fragment="header (firstName, ideas, tag, isAdmin, isModerator)" xmlns:th="http://www.thymeleaf.org">
-    <div class="nav">
+<header th:fragment="header (maleCategories, femaleCategories, firstName, ideas, tag, isAdmin, isModerator)" xmlns:th="http://www.thymeleaf.org">
         <div class="main-nav">
             <div class="container">
                 <div class="logo">
@@ -12,21 +11,17 @@
                     <li>
                         <a th:href="@{/}">Ladies</a>
                         <ul class="nav-sub-list">
-                            <li><a href="">Category 1</a></li>
-                            <li><a href="">Category 2</a></li>
-                            <li><a href="">Category 3</a></li>
-                            <li><a href="">Category 4</a></li>
-                            <li><a href="">Category 5</a></li>
+                            <li th:each="category : ${femaleCategories}" th:if="${femaleCategories != null}" th:object="${category}">
+                                <a th:href="@{/search(tag = ${category.name})}" th:text="${category.name}"></a>
+                            </li>
                         </ul>
                     </li>
                     <li>
                         <a th:href="@{/}">Gentlemen</a>
                         <ul class="nav-sub-list">
-                            <li><a href="">Category 1</a></li>
-                            <li><a href="">Category 2</a></li>
-                            <li><a href="">Category 3</a></li>
-                            <li><a href="">Category 4</a></li>
-                            <li><a href="">Category 5</a></li>
+                            <li th:each="category : ${maleCategories}" th:if="${maleCategories != null}">
+                                <a th:href="@{/search(tag = ${category.name})}" th:text="${category.name}"></a>
+                            </li>
                         </ul>
                     </li>
                     <li>
@@ -54,14 +49,14 @@
                 </div>
             </div>
         </div>
-        <div class="search-nav">
+        <div class="search-nav" id="search-nav">
             <div class="container">
             <div class="ideas">
                 <a th:href="@{/search(tag = ${idea})}" th:each="idea : ${ideas}" th:text="${idea}"></a>
             </div>
             <div class="search-form">
                 <form th:action="@{/search}" method="get">
-                    <input type="text" name="tag">
+                    <input type="text" name="tag" th:value="${tag}">
                     <div>
                         <input type="submit" value="">
                     </div>
@@ -70,7 +65,6 @@
             <div class="cart">
                 <a th:href="@{/cart}"></a>
             </div>
+            </div>
         </div>
-        </div>
-    </div>
 </header>

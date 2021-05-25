@@ -1,28 +1,38 @@
 <div th:fragment="products (tag)" xmlns:th="http://www.w3.org/1999/xhtml">
-    <div>
-        <ul>
-            <li><a th:href="@{/search(tag = ${tag}, size=${productsPage.size}, page=${pageNumber}, sort=0)}">newest</a></li>
-            <li><a th:href="@{/search(tag = ${tag}, size=${productsPage.size}, page=${pageNumber}, sort=1)}">from A to Z</a></li>
-            <li><a th:href="@{/search(tag = ${tag}, size=${productsPage.size}, page=${pageNumber}, sort=2)}">from Z to A</a></li>
-            <li><a th:href="@{/search(tag = ${tag}, size=${productsPage.size}, page=${pageNumber}, sort=3)}">ascending price</a></li>
-            <li><a th:href="@{/search(tag = ${tag}, size=${productsPage.size}, page=${pageNumber}, sort=4)}">descending price</a></li>
-        </ul>
+    <div class="container">
+        <form class="sorter" th:action="@{/search(tag = ${tag}, size=${productsPage.size}, page=${pageNumber})}" method="get">
+            <select name="sort" id="sort" onchange="this.form.submit()">
+                <option value="0" th:selected="${sort_selected} == 0">newest</option>
+                <option value="1" th:selected="${sort_selected} == 1">from A to Z</option>
+                <option value="2" th:selected="${sort_selected} == 2">from Z to A</option>
+                <option value="3" th:selected="${sort_selected} == 3">ascending price</option>
+                <option value="4" th:selected="${sort_selected} == 4">descending price</option>
+            </select>
+            <input type="submit" value="sort">
+        </form>
     </div>
-    <div>
-        <div th:each="product: ${productsPage.content}">
-            <a th:href="@{/product/{id}(id = ${product.id})}">
-                <img th:src="@{/img_storage/{name}(name = ${product.img_name})}">
-                <h5 th:text="${product.company}"></h5>
-                <span th:text="${product.name}"></span>
-                <span th:text="${product.price}"></span>
-            </a>
+    <div class="container">
+        <div class="product-page" th:if="${productsPage != null}">
+            <div class="product-card" th:each="product : ${productsPage}">
+                <img th:src="@{/img_storage/{path}(path=${product.img_name[0]})}">
+                <div>
+                    <span th:text="${product.category?.name}"></span>
+                    <a th:href="@{/product/{id}(id = ${product.id})}" th:text="${product.name}"></a>
+                    <div>
+                        <span th:text="${product.price} + ' zł'"></span>
+                        <span th:if="false">Hot</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <nav th:if="${productsPage.totalPages > 0}">
-        <ul>
-            <li th:each="pageNumber : ${pageNumbers}">
-                <a th:href="@{/search(size=${productsPage.size}, page=${pageNumber})}" th:text="${pageNumber}"></a>
-            </li>
-        </ul>
-    </nav>
+    <div class="container">
+        <nav th:if="${productsPage.totalPages > 1}">
+            <ul class="product-page-nav">
+                <li th:each="pageNumber : ${pageNumbers}">
+                    <a th:href="@{/search(size=${productsPage.size}, page=${pageNumber})}" th:text="${pageNumber}"></a>
+                </li>
+            </ul>
+        </nav>
+    </div>
 </div>

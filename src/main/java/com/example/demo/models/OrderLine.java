@@ -16,9 +16,15 @@ public class OrderLine {
 
     private int count;
 
+    private double price;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cart_id")
     private Cart cart;
+
+    private String color;
+
+    private String size;
 
     public Long getId() {
         return id;
@@ -50,5 +56,29 @@ public class OrderLine {
 
     public void setCart(Cart cart) {
         this.cart = cart;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
     }
 }

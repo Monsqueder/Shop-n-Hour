@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 
@@ -40,11 +41,11 @@ public class ProductController {
     }
 
     @PostMapping("/addToCart/{id}")
-    public String addToCart(@PathVariable Long id, @RequestParam int count) {
-        if (productService.addToCart(id, count)) {
+    public String addToCart(@PathVariable Long id, @RequestParam int count, @RequestParam String color, @RequestParam String size) {
+        if (productService.addToCart(id, count, color, size)) {
             return "redirect:/";
         } else {
-            return "redirect:/product/{id}";
+            return "product";
         }
     }
 
@@ -63,11 +64,14 @@ public class ProductController {
                          @RequestParam(required = false) String tag,
                          @RequestParam("page") Optional<Integer> page,
                          @RequestParam("size") Optional<Integer> size,
-                         @RequestParam("sort") Optional<Integer> sort) {
+                         @Valid Optional<Integer> sort) {
 
         //header
         controllerUtils.showHeader(model, tag);
         controllerUtils.showProductPage(model, page, size, sort, tag);
+
+        int currentSort = sort.orElse(0);
+        model.addAttribute("sort_selected", currentSort);
 
         return "search";
     }

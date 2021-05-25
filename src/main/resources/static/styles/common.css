@@ -20,15 +20,15 @@ body {
     min-height: 100vh;
 }
 
-.nav {
-    display: flex;
-    flex-direction: column;
+header {
+    background: white;
 }
 
 .container {
     display: flex;
     flex-direction: row;
     width: 80%;
+    margin: 0 auto;
 }
 
 .main-nav {
@@ -88,9 +88,7 @@ li:hover > .nav-sub-list, div:hover > .nav-sub-list {
     position: absolute;
     min-width: 200px;
     margin-left: -1px;
-    border-left: 1px solid #99998f;
-    border-right: 1px solid #99998f;
-    border-bottom: 1px solid #99998f;
+    border: 1px solid #99998f;
 }
 
 .nav-sub-list > li {
@@ -131,9 +129,8 @@ li:hover > .nav-sub-list, div:hover > .nav-sub-list {
 }
 
 .search-nav {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+    background: white;
+    overflow: hidden;
     padding-top: 12px;
     padding-bottom: 12px;
     border-bottom: 1px solid #99998f;
@@ -235,13 +232,15 @@ li:hover > .nav-sub-list, div:hover > .nav-sub-list {
 }
 
 .content {
-    min-height: 80vh;
+    padding-top: 10px;
+    min-height: 90vh;
+    background: none;
 }
 
 footer {
     display: flex;
     justify-content: center;
-    height: 8vh;
+    height: 15vh;
     border-top: 1px solid #99998f;
 }
 
@@ -251,4 +250,26 @@ footer > .container > span {
     margin-left: 10px;
     color: slategray;
     font-size: 12px;
+}
+
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+.padding {
+    padding-top: 70px;
+}
+
+.label > span {
+    display: flex;
+    margin: 20px 12%;
+    font-size: 24px;
+    font-weight: bolder;
+}
+
+.label {
+    padding-bottom: 10px;
+    box-shadow: 1px 5px 10px -5px rgba(0, 0, 0, 0.5);
 }
