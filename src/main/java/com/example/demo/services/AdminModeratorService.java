@@ -29,7 +29,8 @@ public class AdminModeratorService {
     private String uploadPath;
 
     public boolean addProduct(Product product, Long categoryId, MultipartFile[] files, String[] sizes, String[] colors) {
-        if (product == null || files == null) {
+        if (product == null || files == null || files.length == 0
+        ) {
             return false;
         }
 

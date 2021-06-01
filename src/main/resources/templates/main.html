@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title th:text="${title} ?: 'The Shop'"></title>
-    <link rel="stylesheet" href="/styles/common.css">
-    <link rel="stylesheet" href="/styles/product_styles.css">
+    <link rel="stylesheet" href="/styles/common.css" />
+    <link rel="stylesheet" href="/styles/product_styles.css" />
+    <script type="text/javascript" src="/js/sticky_navbar.js"></script>
 </head>
 <body>
     <div th:replace="fragments/header.html :: header(
@@ -24,9 +25,9 @@
             <span>Hot offer</span>
         </div>
         <div class="container">
-            <div class="product-list" th:if="${productLine1 != null}">
+            <div class="product-list" id="product-list" th:if="${productLine1 != null}">
                 <div class="product-card" th:each="product : ${productLine1}">
-                    <img th:src="@{/img_storage/{path}(path=${product.img_name[0]})}">
+                    <img th:src="@{/img_storage/{path}(path=${product.img_name[0]})}" />
                     <div>
                         <span th:text="${product.category?.name}"></span>
                         <a th:href="@{/product/{id}(id = ${product.id})}" th:text="${product.name}"></a>
@@ -42,9 +43,9 @@
             <span>Latest arrival</span>
         </div>
         <div class="container">
-            <div class="product-list" th:if="${productLine2 != null}">
+            <div class="product-list" id="product-list-2" th:if="${productLine2 != null}">
                 <div class="product-card" th:each="product : ${productLine2}">
-                    <img th:src="@{/img_storage/{path}(path=${product.img_name[0]})}">
+                    <img th:src="@{/img_storage/{path}(path=${product.img_name[0]})}" />
                     <div>
                         <span th:text="${product.category?.name}"></span>
                         <a th:href="@{/product/{id}(id = ${product.id})}" th:text="${product.name}"></a>
@@ -58,22 +59,5 @@
         </div>
     </div>
     <div th:replace="fragments/footer.html :: footer"></div>
-    <script type="text/javascript">
-        window.onscroll = function() {myFunction()};
-
-        var search = document.getElementById("search-nav");
-        var content = document.getElementById("content");
-        var sticky = search.offsetTop;
-
-        function myFunction() {
-            if (window.pageYOffset >= sticky) {
-                search.classList.add("sticky");
-                content.classList.add("padding");
-            } else {
-                search.classList.remove("sticky");
-                content.classList.remove("padding");
-            }
-        }
-    </script>
 </body>
 </html>
